@@ -28,10 +28,9 @@ class Station
     n = 0
     @trains.each do |train|
       if train.type == type
-        n = n + 1
+        n += 1
       end
     end
     n
   end
-
 end
