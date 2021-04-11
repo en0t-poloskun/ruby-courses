@@ -17,19 +17,19 @@ class Train
   end
 
   def move_next
-    if current_station != route.stations.last
-      current_station.send_train(self)
-      @current_station = next_station
-      current_station.add_train(self)
-    end
+    return unless next_station
+
+    current_station.send_train(self)
+    @current_station = next_station
+    current_station.add_train(self)
   end
 
   def move_back
-    if current_station != route.stations.first
-      current_station.send_train(self)
-      @current_station = previous_station
-      current_station.add_train(self)
-    end
+    return unless previous_station
+
+    current_station.send_train(self)
+    @current_station = previous_station
+    current_station.add_train(self)
   end
 
   def next_station
@@ -49,14 +49,10 @@ class Train
   end
 
   def add_wagon
-    if speed == 0
-      @wagons += 1
-    end
+    @wagons += 1 if speed.zero?
   end
 
   def delete_wagon
-    if speed == 0
-      @wagons -= 1
-    end
+    @wagons -= 1 if speed.zero?
   end
 end

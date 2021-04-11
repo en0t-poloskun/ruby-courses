@@ -15,22 +15,10 @@ class Station
   end
 
   def get_trains_by_type(type)
-    trains_by_type = []
-    @trains.each do |train|
-      if train.type == type
-        trains_by_type << train
-      end
-    end
-    trains_by_type
+    @trains.filter { |train| train.type == type }
   end
 
   def count_type(type)
-    n = 0
-    @trains.each do |train|
-      if train.type == type
-        n += 1
-      end
-    end
-    n
+    get_trains_by_type(type).size
   end
 end
