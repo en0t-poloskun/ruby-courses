@@ -20,7 +20,7 @@ class Train
     return unless next_station
 
     current_station.send_train(self)
-    @current_station = next_station
+    self.current_station = next_station
     current_station.add_train(self)
   end
 
@@ -28,7 +28,7 @@ class Train
     return unless previous_station
 
     current_station.send_train(self)
-    @current_station = previous_station
+    self.current_station = previous_station
     current_station.add_train(self)
   end
 
@@ -49,10 +49,14 @@ class Train
   end
 
   def add_wagon
-    @wagons += 1 if speed.zero?
+    self.wagons += 1 if speed.zero?
   end
 
   def delete_wagon
-    @wagons -= 1 if speed.zero?
+    self.wagons -= 1 if speed.zero?
   end
+
+  protected
+
+  attr_writer :type, :wagons, :current_station # инстанс переменные, значения которых нельзя задавать в клиентском коде
 end
