@@ -9,11 +9,11 @@ class Train
     current_station.add_train(self)
   end
 
-  def initialize(number, type, wagons)
+  def initialize(number, type)
     @speed = 0
     @number = number
     @type = type
-    @wagons = wagons
+    @wagons = []
   end
 
   def move_next
@@ -49,11 +49,11 @@ class Train
   end
 
   def add_wagon
-    self.wagons += 1 if speed.zero?
+    # self.wagons += 1 if speed.zero?
   end
 
   def delete_wagon
-    self.wagons -= 1 if speed.zero?
+    # self.wagons -= 1 if speed.zero?
   end
 
   protected
