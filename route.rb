@@ -10,10 +10,10 @@ class Route
   end
 
   def delete_station(station)
-    @middle_stations.delete(station)
+    @stations.delete(station)
   end
 
   def show_route
-    @stations.each { |station| puts station }
+    @stations.each { |station| puts station.name }
   end
 end

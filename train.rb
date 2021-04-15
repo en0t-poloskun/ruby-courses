@@ -1,7 +1,7 @@
 class Train
   attr_accessor :speed
 
-  attr_reader :type, :wagons, :route, :current_station
+  attr_reader :type, :wagons, :route, :current_station, :number
 
   def route=(route)
     @route = route

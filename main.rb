@@ -18,7 +18,7 @@ class Main
   def menu
     while true
       puts("\n 1. Создать станцию\n 2. Cоздать поезд\n 3. Создать маршрут\n 4. Создать вагон\n 5. Изменить существующий маршрут\n" + 
-      " 6. Назначать маршрут поезду\n 7. Добавлять/отцепить вагон\n 8. Переместить поезд\n 9. Посмотреть список станций\n" + 
+      " 6. Назначать маршрут поезду\n 7. Добавить/отцепить вагон\n 8. Переместить поезд\n 9. Посмотреть список станций\n" + 
       "10. Посмотреть список поездов на станции\n 0. Выйти из меню\n\n")
       printf("Введите номер операции: ")
       n = gets.to_i
@@ -34,9 +34,9 @@ class Main
       when 4
         create_wagon
       when 5
-        "smth"
+        change_route
       when 6
-        "smth"
+        assign_route
       when 7
         "smth"
       when 8
@@ -63,6 +63,18 @@ class Main
   def show_stations
     puts("Список всех станций:")
     stations.each_with_index { |station, i| puts "#{i+1}. #{station.name}" }
+  end
+
+  def show_trains
+    puts("Список всех поездов:")
+    trains.each_with_index { |train, i| puts "#{i+1}. #{train.number}" }
+  end
+
+  def show_routs
+    routs.each_with_index do |route, i| 
+      puts("Маршрут №#{i+1}:")
+      route.show_route
+    end
   end
 
   def create_train
@@ -99,7 +111,38 @@ class Main
       wagons << PassengerWagon.new
     end
     puts("Вагон успешно создан!")
-    puts(wagons)
+  end
+
+  def change_route
+    show_routs
+    printf("Введите номер маршрута для изменения: ")
+    r = gets.to_i
+    puts("\n 1. Добавить станцию\n 2. Удалить станцию\n\n")
+    printf("Введите номер операции: ")
+    n = gets.to_i
+    show_stations
+    printf("Введите номер станции: ")
+    s = gets.to_i
+    if n == 1
+      routs[r-1].add_station(stations[s-1])
+    elsif n == 2
+      routs[r-1].delete_station(stations[s-1])
+    end
+    puts("Маршрут успешно изменен!")
+  end
+
+  def change_wagons
+  end
+
+  def assign_route
+    show_trains
+    printf("Введите номер поезда по списку: ")
+    t = gets.to_i
+    show_routs
+    printf("Введите номер маршрута: ")
+    r = gets.to_i
+    trains[t-1].route = routs[r-1]
+    puts("Маршрут назначен")
   end
 
 end
