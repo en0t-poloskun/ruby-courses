@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Train
   attr_accessor :speed
 
@@ -32,14 +34,6 @@ class Train
     current_station.add_train(self)
   end
 
-  def next_station
-    route.stations[route.stations.index(current_station) + 1]
-  end
-
-  def previous_station
-    current_station != route.stations.first ? route.stations[route.stations.index(current_station) - 1] : nil
-  end
-
   def go
     self.speed = 50
   end
@@ -51,16 +45,26 @@ class Train
   def add_wagon(wagon)
     return if type != wagon.type
 
-    self.wagons << wagon
+    wagons << wagon
   end
 
   def delete_wagon(wagon)
     return if type != wagon.type
-    
-    self.wagons.delete(wagon)
+
+    wagons.delete(wagon)
   end
 
   protected
 
   attr_writer :type, :wagons, :current_station # инстанс переменные, значения которых нельзя задавать в клиентском коде
+
+  # методы не вызываются в клиентском коде
+
+  def next_station
+    route.stations[route.stations.index(current_station) + 1]
+  end
+
+  def previous_station
+    current_station != route.stations.first ? route.stations[route.stations.index(current_station) - 1] : nil
+  end
 end

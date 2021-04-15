@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CargoWagon < Wagon
   def initialize
-    super("грузовой")
+    super('грузовой')
   end
 end

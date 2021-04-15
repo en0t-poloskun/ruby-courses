@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Station
   attr_reader :trains, :name
 
@@ -28,6 +30,5 @@ class Station
 
   private
 
-  attr_writer :trains
-
+  attr_writer :trains # инстанс переменная, которая не изменяется напрямую в клиентском коде
 end
