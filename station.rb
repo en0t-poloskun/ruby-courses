@@ -7,18 +7,27 @@ class Station
   end
 
   def add_train(train)
-    @trains << train
+    trains << train
   end
 
   def send_train(train)
-    @trains.delete(train)
+    trains.delete(train)
   end
 
   def get_trains_by_type(type)
-    @trains.filter { |train| train.type == type }
+    trains.filter { |train| train.type == type }
   end
 
   def count_type(type)
     get_trains_by_type(type).size
   end
+
+  def show_trains
+    trains.each { |train| puts train.number }
+  end
+
+  private
+
+  attr_writer :trains
+
 end

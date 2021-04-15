@@ -38,27 +38,20 @@ class Main
       when 6
         assign_route
       when 7
-        "smth"
+        change_wagons
       when 8
-        "smth"
+        move_train
       when 9
         show_stations
       when 10
-        "smth"
+        show_trains_at_staion
       end
     end
   end
 
   private
 
-  attr_accessor :stations, :trains, :routs, :wagons
-
-  def create_station
-    printf("Введите название станции: ")
-    name = gets
-    stations << Station.new(name)
-    puts("Станция успешно создана!")
-  end
+  attr_accessor :stations, :routs, :wagons, :trains
 
   def show_stations
     puts("Список всех станций:")
@@ -70,11 +63,31 @@ class Main
     trains.each_with_index { |train, i| puts "#{i+1}. #{train.number}" }
   end
 
+  def show_wagons
+    puts("Список всех вагонов:")
+    wagons.each_with_index { |wagon, i| puts "#{i+1}. #{wagon.type}" }
+  end
+
   def show_routs
     routs.each_with_index do |route, i| 
       puts("Маршрут №#{i+1}:")
       route.show_route
     end
+  end
+
+  def show_trains_at_staion
+    show_stations
+    printf("Введите номер станции: ")
+    s = gets.to_i
+    puts("Список поездов на станции:")
+    stations[s-1].show_trains
+  end
+
+  def create_station
+    printf("Введите название станции: ")
+    name = gets
+    stations << Station.new(name)
+    puts("Станция успешно создана!")
   end
 
   def create_train
@@ -132,6 +145,20 @@ class Main
   end
 
   def change_wagons
+    show_trains
+    printf("Введите номер поезда по списку: ")
+    t = gets.to_i
+    puts("\n 1. Добавить вагон\n 2. Отцепить вагон\n\n")
+    printf("Введите номер операции: ")
+    n = gets.to_i
+    show_wagons
+    printf("Введите номер вагона: ")
+    w = gets.to_i
+    if n == 1
+      trains[t-1].add_wagon(wagons[w-1])
+    elsif n == 2
+      trains[t-1].delete_wagon(wagons[w-1])
+    end
   end
 
   def assign_route
@@ -143,6 +170,21 @@ class Main
     r = gets.to_i
     trains[t-1].route = routs[r-1]
     puts("Маршрут назначен")
+  end
+
+  def move_train
+    show_trains
+    printf("Введите номер поезда по списку: ")
+    t = gets.to_i
+    puts("\n 1. Переместить поезд вперед\n 2. Переместить поезд назад\n\n")
+    printf("Введите номер операции: ")
+    n = gets.to_i
+    if n == 1
+      trains[t-1].move_next
+    elsif n == 2
+      trains[t-1].move_back
+    end
+    puts("Поезд перемещен")
   end
 
 end

@@ -48,12 +48,16 @@ class Train
     self.speed = 0
   end
 
-  def add_wagon
-    # self.wagons += 1 if speed.zero?
+  def add_wagon(wagon)
+    return if type != wagon.type
+
+    self.wagons << wagon
   end
 
-  def delete_wagon
-    # self.wagons -= 1 if speed.zero?
+  def delete_wagon(wagon)
+    return if type != wagon.type
+    
+    self.wagons.delete(wagon)
   end
 
   protected
