@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Route
   attr_reader :stations
 
@@ -6,14 +8,18 @@ class Route
   end
 
   def add_station(station)
-    @stations.insert(-2, station)
+    stations.insert(-2, station)
   end
 
   def delete_station(station)
-    @middle_stations.delete(station)
+    stations.delete(station)
   end
 
   def show_route
-    @stations.each { |station| puts station }
+    stations.each { |station| puts station.name }
   end
+
+  private
+
+  attr_writer :stations # инстанс переменная, которая не изменяется напрямую в клиентском коде
 end

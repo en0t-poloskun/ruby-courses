@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Train
   attr_accessor :speed
 
-  attr_reader :type, :wagons, :route, :current_station
+  attr_reader :type, :wagons, :route, :current_station, :number
 
   def route=(route)
     @route = route
@@ -9,18 +11,18 @@ class Train
     current_station.add_train(self)
   end
 
-  def initialize(number, type, wagons)
+  def initialize(number, type)
     @speed = 0
     @number = number
     @type = type
-    @wagons = wagons
+    @wagons = []
   end
 
   def move_next
     return unless next_station
 
     current_station.send_train(self)
-    @current_station = next_station
+    self.current_station = next_station
     current_station.add_train(self)
   end
 
@@ -28,16 +30,8 @@ class Train
     return unless previous_station
 
     current_station.send_train(self)
-    @current_station = previous_station
+    self.current_station = previous_station
     current_station.add_train(self)
-  end
-
-  def next_station
-    route.stations[route.stations.index(current_station) + 1]
-  end
-
-  def previous_station
-    current_station != route.stations.first ? route.stations[route.stations.index(current_station) - 1] : nil
   end
 
   def go
@@ -48,11 +42,29 @@ class Train
     self.speed = 0
   end
 
-  def add_wagon
-    @wagons += 1 if speed.zero?
+  def add_wagon(wagon)
+    return if type != wagon.type
+
+    wagons << wagon
   end
 
-  def delete_wagon
-    @wagons -= 1 if speed.zero?
+  def delete_wagon(wagon)
+    return if type != wagon.type
+
+    wagons.delete(wagon)
+  end
+
+  protected
+
+  attr_writer :type, :wagons, :current_station # инстанс переменные, значения которых нельзя задавать в клиентском коде
+
+  # методы не вызываются в клиентском коде
+
+  def next_station
+    route.stations[route.stations.index(current_station) + 1]
+  end
+
+  def previous_station
+    current_station != route.stations.first ? route.stations[route.stations.index(current_station) - 1] : nil
   end
 end
