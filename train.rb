@@ -1,6 +1,8 @@
-# frozen_string_literal: true
+# frozen_string_literal: truet
 
 class Train
+  include Manufacturer
+
   attr_accessor :speed
 
   attr_reader :type, :wagons, :route, :current_station, :number
