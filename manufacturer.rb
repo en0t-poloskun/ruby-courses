@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Manufacturer
-  def set_manufacturer(name)
+  def specify_manufacturer(name)
     self.manufacturer = name
   end
 
-  def get_manufacturer
-    self.manufacturer
+  def discover_manufacturer
+    manufacturer
   end
 
   protected

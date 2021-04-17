@@ -1,4 +1,4 @@
-# frozen_string_literal: truet
+# frozen_string_literal: true
 
 class Train
   include Manufacturer
@@ -11,7 +11,7 @@ class Train
   @@instances = []
 
   def self.find(number)
-    @@instances.find {|train| train.number == number }
+    @@instances.find { |train| train.number == number }
   end
 
   def route=(route)
