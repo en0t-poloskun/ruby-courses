@@ -3,9 +3,16 @@
 class Station
   attr_reader :trains, :name
 
+  @@instances = []
+
+  def self.all
+    @@instances
+  end
+
   def initialize(name)
     @name = name
     @trains = []
+    @@instances << self
   end
 
   def add_train(train)
