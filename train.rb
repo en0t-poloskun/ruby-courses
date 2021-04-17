@@ -2,6 +2,7 @@
 
 class Train
   include Manufacturer
+  include InstanceCounter
 
   attr_accessor :speed
 
@@ -25,6 +26,7 @@ class Train
     @type = type
     @wagons = []
     @@instances << self
+    register_instance
   end
 
   def move_next
