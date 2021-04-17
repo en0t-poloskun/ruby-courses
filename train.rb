@@ -7,6 +7,12 @@ class Train
 
   attr_reader :type, :wagons, :route, :current_station, :number
 
+  @@instances = []
+
+  def self.find(number)
+    @@instances.find {|train| train.number == number }
+  end
+
   def route=(route)
     @route = route
     @current_station = route.stations.first
@@ -18,6 +24,7 @@ class Train
     @number = number
     @type = type
     @wagons = []
+    @@instances << self
   end
 
   def move_next
