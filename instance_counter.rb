@@ -10,6 +10,7 @@ module InstanceCounter
     attr_accessor :instance_number
 
     def instances
+      self.instance_number ||= 0
       instance_number
     end
   end
