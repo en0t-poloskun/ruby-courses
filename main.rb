@@ -22,7 +22,7 @@ class Main
   def menu
     loop do
       puts("\n 1. Создать станцию\n 2. Cоздать поезд\n 3. Создать маршрут\n 4. Создать вагон\n" \
-      "5. Изменить существующий маршрут\n 6. Назначать маршрут поезду\n 7. Добавить/отцепить вагон\n" \
+      " 5. Изменить существующий маршрут\n 6. Назначать маршрут поезду\n 7. Добавить/отцепить вагон\n" \
       " 8. Переместить поезд\n 9. Посмотреть список станций\n 10. Посмотреть список поездов на станции\n" \
       " 0. Выйти из меню\n\n")
       printf('Введите номер операции: ')
@@ -56,10 +56,7 @@ class Main
 
   private
 
-  attr_accessor :stations, :routs, :wagons, :trains # пользователь не вызывает геттеры и сеттеры напрямую
-
-  # методы вызываются из меню или внутри других методов, пользователь взаимодействует с текстовым интерфейсом
-  # и не может вызывать методы напрямую
+  attr_accessor :stations, :routs, :wagons, :trains
 
   def show_stations
     puts('Список всех станций:')
@@ -102,15 +99,20 @@ class Main
     puts("\n 1. Создать грузовой поезд\n 2. Cоздать пассажирский поезд\n\n")
     printf('Введите номер операции: ')
     n = gets.to_i
+    raise 'Invalid operation' if (n < 1) || (n > 2)
+
     printf('Введите номер поезда: ')
-    number = gets
+    number = gets.chomp
     case n
     when 1
       trains << CargoTrain.new(number)
     when 2
       trains << PassengerTrain.new(number)
     end
-    puts('Поезд успешно создан!')
+    puts("Поезд №#{number} успешно создан!")
+  rescue RuntimeError => e
+    puts(e.message)
+    retry
   end
 
   def create_route

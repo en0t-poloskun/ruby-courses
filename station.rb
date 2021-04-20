@@ -48,7 +48,7 @@ class Station
 
   private
 
-  attr_writer :trains 
+  attr_writer :trains
 
   def validate!
     raise "Name can't be empty" if name.empty?
