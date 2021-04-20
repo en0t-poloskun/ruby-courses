@@ -1,9 +1,18 @@
 # frozen_string_literal: true
 
 class Train
+  include Manufacturer
+  include InstanceCounter
+
   attr_accessor :speed
 
   attr_reader :type, :wagons, :route, :current_station, :number
+
+  @@instances = {}
+
+  def self.find(number)
+    @@instances[number]
+  end
 
   def route=(route)
     @route = route
@@ -16,6 +25,8 @@ class Train
     @number = number
     @type = type
     @wagons = []
+    @@instances[number] = self
+    register_instance
   end
 
   def move_next
