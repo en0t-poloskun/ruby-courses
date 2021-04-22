@@ -4,6 +4,8 @@ class Train
   include Manufacturer
   include InstanceCounter
 
+  NUMBER_FORMAT = /^[\da-zа-я]{3}-*[\da-zа-я]{2}$/i.freeze
+
   attr_accessor :speed
 
   attr_reader :type, :wagons, :route, :current_station, :number
@@ -25,6 +27,7 @@ class Train
     @number = number
     @type = type
     @wagons = []
+    validate!
     @@instances[number] = self
     register_instance
   end
@@ -65,11 +68,21 @@ class Train
     wagons.delete(wagon)
   end
 
+  def valid?
+    validate!
+    true
+  rescue
+    false
+  end
+
   protected
 
-  attr_writer :type, :wagons, :current_station # инстанс переменные, значения которых нельзя задавать в клиентском коде
+  attr_writer :type, :wagons, :current_station
 
-  # методы не вызываются в клиентском коде
+  def validate!
+    raise 'Number has invalid format' if number !~ NUMBER_FORMAT
+    raise 'Invalid type' if (type != 'грузовой') && (type != 'пассажирский')
+  end
 
   def next_station
     route.stations[route.stations.index(current_station) + 1]

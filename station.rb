@@ -14,6 +14,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@instances << self
     register_instance
   end
@@ -38,7 +39,18 @@ class Station
     trains.each { |train| puts train.number }
   end
 
+  def valid?
+    validate!
+    true
+  rescue
+    false
+  end
+
   private
 
-  attr_writer :trains # инстанс переменная, которая не изменяется напрямую в клиентском коде
+  attr_writer :trains
+
+  def validate!
+    raise "Name can't be empty" if name.empty?
+  end
 end
