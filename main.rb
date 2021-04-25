@@ -178,9 +178,9 @@ class Main
     s = gets.to_i
     case n
     when 1
-      routs[r - 1].add_station(stations[s - 1])
+      routs[r - 1].add(stations[s - 1])
     when 2
-      routs[r - 1].delete_station(stations[s - 1])
+      routs[r - 1].delete(stations[s - 1])
     end
     puts('Маршрут успешно изменен!')
   end
@@ -197,9 +197,9 @@ class Main
     w = gets.to_i
     case n
     when 1
-      trains[t - 1].add_wagon(wagons[w - 1])
+      trains[t - 1].add(wagons[w - 1])
     when 2
-      trains[t - 1].delete_wagon(wagons[w - 1])
+      trains[t - 1].delete(wagons[w - 1])
     end
   end
 

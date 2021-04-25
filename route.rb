@@ -10,11 +10,11 @@ class Route
     register_instance
   end
 
-  def add_station(station)
+  def add(station)
     stations.insert(-2, station)
   end
 
-  def delete_station(station)
+  def delete(station)
     stations.delete(station)
   end
 
