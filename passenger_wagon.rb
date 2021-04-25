@@ -3,10 +3,10 @@
 class PassengerWagon < Wagon
   attr_reader :occupied_seats
 
-  def initialize(seats)
+  def initialize(seats, number = nil)
     @seats = seats
     @occupied_seats = 0
-    super('пассажирский')
+    super('пассажирский', number)
   end
 
   def take_seat

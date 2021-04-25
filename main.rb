@@ -24,7 +24,7 @@ class Main
       puts("\n 1. Создать станцию\n 2. Cоздать поезд\n 3. Создать маршрут\n 4. Создать вагон\n" \
       " 5. Изменить существующий маршрут\n 6. Назначать маршрут поезду\n 7. Добавить/отцепить вагон\n" \
       " 8. Переместить поезд\n 9. Посмотреть список станций\n 10. Посмотреть список поездов на станции\n" \
-      " 0. Выйти из меню\n\n")
+      " 11. Список вагонов у поезда\n 12. Занять место/объем в вагоне\n 0. Выйти из меню\n\n")
       printf('Введите номер операции: ')
       n = gets.to_i
       case n
@@ -50,6 +50,10 @@ class Main
         show_stations
       when 10
         show_trains_at_staion
+      when 11
+        show_wagons_for_train
+      when 12
+        occupate
       end
     end
   end
@@ -70,7 +74,7 @@ class Main
 
   def show_wagons
     puts('Список всех вагонов:')
-    wagons.each_with_index { |wagon, i| puts "#{i + 1}. #{wagon.type}" }
+    wagons.each { |wagon| puts "#{wagon.number}. #{wagon.type}" }
   end
 
   def show_routs
@@ -85,7 +89,27 @@ class Main
     printf('Введите номер станции: ')
     s = gets.to_i
     puts('Список поездов на станции:')
-    stations[s - 1].show_trains
+    stations[s - 1].trains_iterator { |x| puts("номер: #{x.number}, тип: #{x.type}, кол-во вагонов: #{x.wagons.size}") }
+  end
+
+  def show_wagons_for_train
+    show_trains
+    printf('Введите номер поезда по списку: ')
+    i = gets.to_i
+    train = trains[i - 1]
+    puts('Список вагонов поезда:')
+    case train.type
+    when 'грузовой'
+      train.wagons_iterator do |x|
+        puts("номер: #{x.number}, тип: #{x.type}, кол-во свободного объема: #{x.free_volume}," \
+        " кол-во занятого объема: #{x.occupied_volume}")
+      end
+    when 'пассажирский'
+      train.wagons_iterator do |x|
+        puts("номер: #{x.number}, тип: #{x.type}, кол-во свободных мест: #{x.free_seats}," \
+        " кол-во занятых мест: #{x.occupied_seats}")
+      end
+    end
   end
 
   def create_station
@@ -131,9 +155,13 @@ class Main
     n = gets.to_i
     case n
     when 1
-      wagons << CargoWagon.new
+      printf('Введите объем: ')
+      volume = gets.to_f
+      wagons << CargoWagon.new(volume, wagons.size + 1)
     when 2
-      wagons << PassengerWagon.new
+      printf('Введите кол-во мест: ')
+      seats = gets.to_i
+      wagons << PassengerWagon.new(seats, wagons.size + 1)
     end
     puts('Вагон успешно создан!')
   end
@@ -200,5 +228,20 @@ class Main
       trains[t - 1].move_back
     end
     puts('Поезд перемещен')
+  end
+
+  def occupate
+    show_wagons
+    printf('Введите номер вагона: ')
+    i = gets.to_i
+    wagon = wagons[i - 1]
+    case wagon.type
+    when 'грузовой'
+      printf('Введите объем: ')
+      volume = gets.to_f
+      wagon.fill_with(volume)
+    when 'пассажирский'
+      wagon.take_seat
+    end
   end
 end

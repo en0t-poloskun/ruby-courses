@@ -3,10 +3,10 @@
 class CargoWagon < Wagon
   attr_reader :occupied_volume
 
-  def initialize(volume)
+  def initialize(volume, number = nil)
     @volume = volume
     @occupied_volume = 0
-    super('грузовой')
+    super('грузовой', number)
   end
 
   def fill_with(some_volume)
