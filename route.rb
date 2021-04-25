@@ -24,5 +24,5 @@ class Route
 
   private
 
-  attr_writer :stations # инстанс переменная, которая не изменяется напрямую в клиентском коде
+  attr_writer :stations
 end
