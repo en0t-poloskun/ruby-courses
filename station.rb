@@ -39,6 +39,10 @@ class Station
     trains.each { |train| puts train.number }
   end
 
+  def trains_iterator(&block)
+    trains.each { |train| block.call(train) }
+  end
+
   def valid?
     validate!
     true

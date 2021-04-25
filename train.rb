@@ -68,6 +68,10 @@ class Train
     wagons.delete(wagon)
   end
 
+  def wagons_iterator(&block)
+    wagons.each { |wagon| block.call(wagon) }
+  end
+
   def valid?
     validate!
     true
