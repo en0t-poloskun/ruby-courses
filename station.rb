@@ -19,30 +19,34 @@ class Station
     register_instance
   end
 
-  def add_train(train)
+  def add(train)
     trains << train
   end
 
-  def send_train(train)
+  def send(train)
     trains.delete(train)
   end
 
-  def get_trains_by_type(type)
+  def get_trains_by(type)
     trains.filter { |train| train.type == type }
   end
 
-  def count_type(type)
-    get_trains_by_type(type).size
+  def count(type)
+    get_trains_by(type).size
   end
 
   def show_trains
     trains.each { |train| puts train.number }
   end
 
+  def trains_iterator(&block)
+    trains.each { |train| block.call(train) }
+  end
+
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false
   end
 

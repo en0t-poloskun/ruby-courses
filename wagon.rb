@@ -3,17 +3,18 @@
 class Wagon
   include Manufacturer
 
-  attr_reader :type
+  attr_reader :type, :number
 
-  def initialize(type)
+  def initialize(type, number = nil)
     @type = type
+    @number = number
     validate!
   end
 
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false
   end
 

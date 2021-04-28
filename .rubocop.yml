@@ -1,0 +1,33 @@
+Style/Documentation:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: true
+  Exclude: 
+    - ./main.rb
+
+Metrics/AbcSize:
+  Enabled: true
+  Exclude: 
+    - ./main.rb
+
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Exclude: 
+    - ./main.rb
+
+Metrics/MethodLength:
+  Enabled: true
+  Exclude: 
+    - ./main.rb
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude: 
+    - ./main.rb
+
+Style/ClassVars:
+  Enabled: true
+  Exclude: 
+    - ./train.rb
+    - ./station.rb

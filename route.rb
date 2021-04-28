@@ -10,11 +10,11 @@ class Route
     register_instance
   end
 
-  def add_station(station)
+  def add(station)
     stations.insert(-2, station)
   end
 
-  def delete_station(station)
+  def delete(station)
     stations.delete(station)
   end
 
@@ -24,5 +24,5 @@ class Route
 
   private
 
-  attr_writer :stations # инстанс переменная, которая не изменяется напрямую в клиентском коде
+  attr_writer :stations
 end
