@@ -26,6 +26,18 @@ module Accessors
         end
       end
     end
+
+    def strong_attr_accessor(name, type)
+      var_name = "@#{name}".to_sym
+
+      define_method(name) { instance_variable_get(var_name) }
+
+      define_method("#{name}=".to_sym) do |value|
+        raise "Attribute must be of type #{type}" if value.class != type
+
+        instance_variable_set(var_name, value)
+      end
+    end
   end
 
   module InstanceMethods
