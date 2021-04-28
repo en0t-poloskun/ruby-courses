@@ -10,6 +10,8 @@ Metrics/AbcSize:
   Enabled: true
   Exclude: 
     - ./main.rb
+  IgnoredMethods:
+    - attr_accessor_with_history
 
 Metrics/CyclomaticComplexity:
   Enabled: true
@@ -18,6 +20,7 @@ Metrics/CyclomaticComplexity:
 
 Metrics/MethodLength:
   Enabled: true
+  Max: 15
   Exclude: 
     - ./main.rb
 

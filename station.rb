@@ -3,7 +3,11 @@
 class Station
   include InstanceCounter
 
+  include Accessors
+
   attr_reader :trains, :name
+
+  attr_accessor_with_history :a, :b
 
   @@instances = []
 
