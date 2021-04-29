@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Train
-  include Manufacturer, InstanceCounter, Validation
+  include Validation
+  include InstanceCounter
+  include Manufacturer
 
   attr_accessor :speed
 

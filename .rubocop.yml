@@ -18,6 +18,7 @@ Metrics/AbcSize:
     - ./main.rb
   IgnoredMethods:
     - attr_accessor_with_history
+    - demonstrate
 
 Metrics/CyclomaticComplexity:
   Enabled: true
