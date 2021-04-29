@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class Station
-  include InstanceCounter
-
+  include Validation
   include Accessors
+  include InstanceCounter
 
   attr_reader :trains, :name
 
-  attr_accessor_with_history :a, :b
+  validate :name, :presence
+  validate :name, :required_type, String
 
   @@instances = []
 
   def self.all
-    @@instances
+    @@instancess
   end
 
   def initialize(name)
@@ -27,7 +28,7 @@ class Station
     trains << train
   end
 
-  def send(train)
+  def delete(train)
     trains.delete(train)
   end
 
@@ -47,18 +48,7 @@ class Station
     trains.each { |train| block.call(train) }
   end
 
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
   private
 
   attr_writer :trains
-
-  def validate!
-    raise "Name can't be empty" if name.empty?
-  end
 end

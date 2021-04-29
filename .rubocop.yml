@@ -1,6 +1,12 @@
 Style/Documentation:
   Enabled: false
 
+Security/Eval:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
 Metrics/ClassLength:
   Enabled: true
   Exclude: 
