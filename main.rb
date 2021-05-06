@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require_relative 'demonstration'
+require_relative 'validation'
 require_relative 'instance_counter'
 require_relative 'manufacturer'
+require_relative 'accessors'
 require_relative 'route'
 require_relative 'station'
 require_relative 'train'

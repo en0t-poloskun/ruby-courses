@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PassengerWagon < Wagon
+  validate :seats, :presence
+  validate :seats, :required_type, Integer
   attr_reader :occupied_seats
 
   def initialize(seats, number = nil)
@@ -24,7 +26,7 @@ class PassengerWagon < Wagon
   attr_accessor :seats
   attr_writer :occupied_seats
 
-  def validate!
-    raise 'Invalid number of seats' if seats.negative?
-  end
+  # def validate!
+  #  raise 'Invalid number of seats' if seats.negative?
+  # end
 end

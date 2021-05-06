@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
 class Train
-  include Manufacturer
+  include Validation
   include InstanceCounter
-
-  NUMBER_FORMAT = /^[\da-zа-я]{3}-*[\da-zа-я]{2}$/i.freeze
+  include Manufacturer
 
   attr_accessor :speed
 
   attr_reader :type, :wagons, :route, :current_station, :number
+
+  validate :number, :presence
+  validate :number, :required_type, String
+  validate :number, :format, '/^[\da-zа-я]{3}-*[\da-zа-я]{2}$/i'
+  validate :type, :presence
+  validate :type, :required_type, String
+  validate :type, :format, '/^(грузовой|пассажирский)$/'
 
   @@instances = {}
 
@@ -35,7 +41,7 @@ class Train
   def move_next
     return unless next_station
 
-    current_station.send(self)
+    current_station.delete(self)
     self.current_station = next_station
     current_station.add(self)
   end
@@ -43,7 +49,7 @@ class Train
   def move_back
     return unless previous_station
 
-    current_station.send(self)
+    current_station.delete(self)
     self.current_station = previous_station
     current_station.add(self)
   end
@@ -72,21 +78,9 @@ class Train
     wagons.each { |wagon| block.call(wagon) }
   end
 
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
   protected
 
   attr_writer :type, :wagons, :current_station
-
-  def validate!
-    raise 'Number has invalid format' if number !~ NUMBER_FORMAT
-    raise 'Invalid type' if (type != 'грузовой') && (type != 'пассажирский')
-  end
 
   def next_station
     route.stations[route.stations.index(current_station) + 1]

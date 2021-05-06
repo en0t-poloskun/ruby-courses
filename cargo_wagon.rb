@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class CargoWagon < Wagon
+  validate :volume, :presence
+  validate :volume, :required_type, Float
+
   attr_reader :occupied_volume
 
   def initialize(volume, number = nil)
@@ -24,7 +27,7 @@ class CargoWagon < Wagon
   attr_accessor :volume
   attr_writer :occupied_volume
 
-  def validate!
-    raise 'Invalid volume' if volume.negative?
-  end
+  # def validate!
+  #  raise 'Invalid volume' if volume.negative?
+  # end
 end
